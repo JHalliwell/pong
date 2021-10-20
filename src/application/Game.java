@@ -25,18 +25,18 @@ public class Game {
 	private int playerDy;	
 	private int ballXPos;
 	private int ballYPos;
-	private int ballDx;
-	private int ballDy;
+	private float ballDx;
+	private float ballDy;
 	private int scoreOne;
 	private int scoreTwo;
-	private boolean isStarted;
+	private boolean gameStarted;
 	private boolean upKeyPressed;
 	private boolean downKeyPressed;
 	private boolean wKeyPressed;
 	private boolean sKeyPressed;
 	
 	
-	Game() {
+	Game() {ballDx++;
 		Main main = new Main();
 		gameHeight = main.getHeight();
 		gameWidth = main.getWidth();
@@ -53,7 +53,7 @@ public class Game {
 		ballDy = 2;
 		ballDx = 2;
 		ballRadius = 10;
-		isStarted = true;
+		gameStarted = false;
 		scoreOne = 0;
 		scoreTwo = 0;
 	}
@@ -66,26 +66,35 @@ public class Game {
 		
 		movePlayers();
 		
-		gc.setFill(Color.GREEN);
-		gc.fillText("2x = " + playerTwoXPos, gameWidth / 2, 100);
-							
-		if(isStarted) {
+//		gc.setFill(Color.GREEN);
+//		gc.fillText("dx = " + ballDx, gameWidth / 2, 50);
+//		gc.fillText("dy = " + ballDy, gameWidth / 2, 75);
+		
+		if(gameStarted) {
+			// Draw Ball
+			gc.setFill(Color.WHITE);
+			gc.fillOval(ballXPos, ballYPos, ballRadius, ballRadius);
+			
+			// Draw Score
+			gc.setFill(Color.WHITE);
+			gc.fillText(scoreOne + "\t\t\t\t\t\t\t\t\t\t\t\t" + scoreTwo, gameWidth / 2, 50);
+			
+			
 			ballCollision();
 			
 		} else {
-			//reset the ball speed and the direction
-//			ballDx = new Random().nextInt(2) == 0 ? 1: -1;
-//			ballDy = new Random().nextInt(2) == 0 ? 1: -1;
+			// Draw click to start text
+			gc.setFill(Color.WHITE);
+			gc.fillText("Click to Start", (gameWidth / 2) - 10, gameHeight / 2);
+			
+			ballRestart();
 		}
 		// Update Ball Position
 		ballYPos += ballDy;
 		ballXPos += ballDx;
-				
-		// Draw Ball
-		gc.setFill(Color.WHITE);
-		gc.fillOval(ballXPos, ballYPos, ballRadius, ballRadius);
-		
+						
 		// Draw players
+		gc.setFill(Color.WHITE);
 		gc.fillRect(playerOneXPos, playerOneYPos, playerWidth, playerHeight);
 		gc.fillRect(playerTwoXPos, playerTwoYPos, playerWidth, playerHeight);
 	}
@@ -107,10 +116,51 @@ public class Game {
 	
 	private void ballCollision() {
 		if (ballYPos >= gameHeight || ballYPos <= 0) ballDy *= -1;
-		if (ballXPos == playerTwoXPos - 100/*&& ballYPos > (playerOneYPos - playerHeight) && 
-				ballYPos < (playerOneYPos + playerHeight)*/) ballDx *= -1;
-		if (ballXPos == playerTwoXPos && ballYPos > playerTwoYPos &&
-				ballYPos < (playerTwoYPos - playerHeight)) ballDx *= -1;
+		
+		if (ballXPos >= playerTwoXPos - ballRadius && ballYPos > playerTwoYPos && 
+				ballYPos < playerTwoYPos + playerHeight) {
+			if (ballDx < 6) {
+				ballDx += 0.5;
+			}
+			ballDx *= -1;
+		}
+		
+		if (ballXPos >= gameWidth) {
+			scoreOne++;
+			gameStarted = false;
+		}
+		
+		if (ballXPos <= playerOneXPos + ballRadius && ballYPos > playerOneYPos &&
+				ballYPos < playerOneYPos + playerHeight) {
+			if (ballDx > -6) {
+				ballDx -= 0.5;
+			}
+			ballDx *= -1;
+		}
+		
+		if (ballXPos <= 0) {
+			scoreTwo++;
+			gameStarted = false;
+		}
+		
+		
+	}
+	
+	private void ballRestart() {
+		ballXPos = gameWidth / 2;
+		ballYPos = gameHeight / 2;
+		
+		Random rand = new Random();
+		int nX;
+		int nY;
+		do
+			nX = -2 + rand.nextInt(4);
+		while (nX == 0 || nX == -1 || nX == 1);
+		do
+			nY = -1 + rand.nextInt(2);
+		while(nY == 0);
+		ballDx = (float)nX;
+		ballDy = (float)nY;		
 	}
 	
 	public void keyHandler(Scene scene){
@@ -153,6 +203,13 @@ public class Game {
                 sKeyPressed = false;
             }
         });	
+        
+        scene.setOnMouseClicked(e ->
+        {
+        	if (!gameStarted)
+        		gameStarted = true;
+        }
+        );
 	}
 	
 

@@ -28,7 +28,7 @@ public class Main extends Application {
 	private static final int width = 800;
 	private static final int height = 600;
 	
-	public void start(Stage primaryStage) throws FileNotFoundException {
+	public void start(Stage primaryStage) throws FileNotFoundException{
 		Menu menuScreen = new Menu();
 		primaryStage = menuScreen.getMainStage();
         primaryStage.setTitle("PONG");

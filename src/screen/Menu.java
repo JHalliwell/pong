@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import application.Game;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import ui.PongButton;
 
 public class Menu {
 	private Stage menuStage;
@@ -20,7 +25,7 @@ public class Menu {
 	private static int GAME_WIDTH = 800;
 	private static int GAME_HEIGHT = 600;
 	
-	public Menu() throws FileNotFoundException { 
+	public Menu() throws FileNotFoundException{ 
 		menuStage = new Stage();
 		menuStage.setTitle("PONG");
 		menuStage.setResizable(false);
@@ -42,16 +47,44 @@ public class Menu {
 	private void createTitle() {
 		Label titleLbl = new Label("PONG");
         titleLbl.setFont(font);
-        //titleLbl.setStyle(TITLE_STYLE);
+        titleLbl.setStyle("-fx-text-fill: #f2f2f2;");
+        DropShadow dropShadow = new DropShadow();      
+        dropShadow.setBlurType(BlurType.ONE_PASS_BOX);          
+        dropShadow.setColor(Color.GREY);       
+        dropShadow.setHeight(0.5);
+        dropShadow.setWidth(0.5);               
+        dropShadow.setRadius(0.5);                
+        dropShadow.setOffsetX(1); 
+        dropShadow.setOffsetY(0.5);                
+        dropShadow.setSpread(0.5);  
+        titleLbl.setEffect(dropShadow);
         titleLbl.setScaleX(5);
         titleLbl.setScaleY(5);
-        titleLbl.setLayoutX(225);
-        titleLbl.setLayoutY(375);
+        titleLbl.setLayoutX(375);
+        titleLbl.setLayoutY(150);
         menuPane.getChildren().add(titleLbl);
 	}
 	
-	private void createButtons() {
-		
+	private void createButtons() throws FileNotFoundException {
+		PongButton onePlayer = new PongButton("Single Player", 200, 400);
+		onePlayer.setOnAction(e -> {
+              menuStage.hide();
+              SinglePlayer single = new SinglePlayer();
+              single.createNewGame();
+          });
+
+          PongButton multiPlayer = new PongButton("Two Player", 600, 400);
+          multiPlayer.setOnAction(e -> {
+        	  menuStage.hide();
+        	  TwoPlayer two = new TwoPlayer();
+        	  two.createNewGame();
+
+          });
+
+//        PongButton exitButton = new PongButton("Exit", 650, 450, true);
+//        exitButton.setOnAction(e -> menuStage.hide());
+
+        menuPane.getChildren().addAll(onePlayer, multiPlayer);
 	}
 	
 	public Stage getMainStage() {

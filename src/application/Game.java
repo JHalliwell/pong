@@ -36,7 +36,7 @@ public class Game {
 	private boolean sKeyPressed;
 	
 	
-	Game() {ballDx++;
+	Game() {
 		Main main = new Main();
 		gameHeight = main.getHeight();
 		gameWidth = main.getWidth();
@@ -72,8 +72,7 @@ public class Game {
 		
 		if(gameStarted) {
 			// Draw Ball
-			gc.setFill(Color.WHITE);
-			gc.fillOval(ballXPos, ballYPos, ballRadius, ballRadius);
+			
 			
 			// Draw Score
 			gc.setFill(Color.WHITE);
@@ -83,9 +82,7 @@ public class Game {
 			ballCollision();
 			
 		} else {
-			// Draw click to start text
-			gc.setFill(Color.WHITE);
-			gc.fillText("Click to Start", (gameWidth / 2) - 10, gameHeight / 2);
+			
 			
 			ballRestart();
 		}

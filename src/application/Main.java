@@ -1,5 +1,6 @@
 package application;
 	
+import java.io.FileNotFoundException;
 import java.time.Duration;
 
 import javafx.animation.AnimationTimer;
@@ -8,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import screen.Menu;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -26,7 +28,12 @@ public class Main extends Application {
 	private static final int width = 800;
 	private static final int height = 600;
 	
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws FileNotFoundException {
+		Menu menuScreen = new Menu();
+		primaryStage = menuScreen.getMainStage();
+        primaryStage.setTitle("PONG");
+        primaryStage.show();
+        /*
 		primaryStage.setTitle("PONG");		
 		Group root = new Group(); // Creating root Group, which can hold a collection of nodes
 		Scene theScene = new Scene(root); // Creating a Scene
@@ -37,7 +44,7 @@ public class Main extends Application {
 		root.getChildren().add(canvas);
 		
 		Game pongGame = new Game();
-		
+				
 		GraphicsContext gc = canvas.getGraphicsContext2D(); // use this to draw on to canvas
 		
 		new AnimationTimer()
@@ -51,6 +58,7 @@ public class Main extends Application {
 	    pongGame.keyHandler(theScene);
 	    
 	    primaryStage.show();
+	    */
 	}
 	
 	/**

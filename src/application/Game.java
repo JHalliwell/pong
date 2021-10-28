@@ -38,8 +38,8 @@ public class Game {
 	
 	Game() {
 		Main main = new Main();
-		gameHeight = main.getHeight();
-		gameWidth = main.getWidth();
+		gameHeight = main.HEIGHT;
+		gameWidth = main.WIDTH;
 		playerHeight = 100;
 		playerWidth = 15;
 		playerOneXPos = 0;

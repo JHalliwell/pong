@@ -10,10 +10,8 @@ import javafx.scene.control.Button;
 
 public class PongButton extends Button{
 	private static final String MENU_HOVER = "-fx-background-color: transparent\n";
-
-
        
-	private static final String MENU = "-fx-background-color: blue\n";
+	private static final String MENU = "-fx-background-color: white\n";
 
 	private Font font;
 	
@@ -21,7 +19,7 @@ public class PongButton extends Button{
 		this.setText(text);
 		this.setLayoutX(x);
 		this.setLayoutY(y);
-		this.setPrefSize(150, 50);
+		this.setPrefSize(200, 50);
         loadFont();
         this.setFont(font);
         this.setStyle(MENU);

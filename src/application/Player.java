@@ -13,16 +13,15 @@ public class Player {
 	private static int GAME_WIDTH = 800;			
 	private int xPos;
 	private int yPos;
+	private int playerTwoSpeed;
 
 	
-	public Player(boolean one) {
-
-		
+	public Player(boolean one) {		
 		if (one) xPos = 0;
-		else xPos = GAME_WIDTH - WIDTH;	
-		
+		else xPos = GAME_WIDTH - WIDTH;			
 		yPos = (GAME_HEIGHT / 2) - 50;
-	
+		
+		setPlayerTwoSpeed(5);	
 	}
 		
 
@@ -58,6 +57,16 @@ public class Player {
 
 	public static int getSpeed() {
 		return SPEED;
+	}
+
+	public int getPlayerTwoSpeed() {
+		return playerTwoSpeed;
+	}
+
+
+
+	public void setPlayerTwoSpeed(int playerTwoSpeed) {
+		this.playerTwoSpeed = playerTwoSpeed;
 	}	
 	
 }

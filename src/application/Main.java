@@ -24,54 +24,18 @@ import javafx.scene.text.FontWeight;
 
 public class Main extends Application {
 	
-	// Dimension of game 
-	private static final int width = 800;
-	private static final int height = 600;
+	// Dimension of game screen
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	
 	public void start(Stage primaryStage) throws FileNotFoundException{
 		Menu menuScreen = new Menu();
 		primaryStage = menuScreen.getMainStage();
         primaryStage.setTitle("PONG");
         primaryStage.show();
-        /*
-		primaryStage.setTitle("PONG");		
-		Group root = new Group(); // Creating root Group, which can hold a collection of nodes
-		Scene theScene = new Scene(root); // Creating a Scene
-		primaryStage.setScene(theScene);  // A stage can show a scene
-		primaryStage.setResizable(false);
-		
-		Canvas canvas = new Canvas(width, height); // Canvas is what we 'draw' on to
-		root.getChildren().add(canvas);
-		
-		Game pongGame = new Game();
-				
-		GraphicsContext gc = canvas.getGraphicsContext2D(); // use this to draw on to canvas
-		
-		new AnimationTimer()
-	    {
-	        public void handle(long currentNanoTime)
-	        {
-	            pongGame.run(gc);
-	        }
-	    }.start();
-	    
-	    pongGame.keyHandler(theScene);
-	    
-	    primaryStage.show();
-	    */
+
 	}
-	
-	/**
-	 * Getters for game width and height 
-	 */
-	public int getWidth() {
-		return width;
-	}
-	
-	public int getHeight() {
-		return height;
-	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

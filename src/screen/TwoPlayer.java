@@ -1,5 +1,8 @@
 package screen;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 import application.Ball;
@@ -12,15 +15,35 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class TwoPlayer extends SinglePlayer {
+public class TwoPlayer {
 
+	private Stage stage;
+	private Group group;
+	private Scene scene;
+	private Canvas canvas;
+	private GraphicsContext gc;
+	private AnimationTimer animationTimer;	
+	private boolean gameStarted;	
+
+
+	private Ball ball;
+	private Player playerOne;
+	private Player playerTwo;
+
+
+	private int scoreOne = 0;
+	private int scoreTwo = 0;
 	private boolean upKeyPressed = false;
 	private boolean downKeyPressed = false;
+	private boolean sKeyPressed = false;
+	private boolean wKeyPressed = false;
+	private Font font;
 	
-	public TwoPlayer() {
-		
+	public TwoPlayer() throws FileNotFoundException {
+		System.out.println("SinglePlayer()");
 		stage = new Stage();
 		group = new Group();
 		scene = new Scene(group);
@@ -29,6 +52,7 @@ public class TwoPlayer extends SinglePlayer {
 		stage.setScene(scene);
 		canvas = new Canvas(Main.WIDTH, Main.HEIGHT);
 		gc = canvas.getGraphicsContext2D();
+		loadFont();
 		group.getChildren().add(canvas);
 		
 		ball = new Ball();
@@ -36,8 +60,11 @@ public class TwoPlayer extends SinglePlayer {
 		playerTwo = new Player(false);
 		gameStarted = false;
 		createAnimationTimer();		
-		addActionListeners();
-		
+		addActionListeners();		
+	}
+	
+	private void loadFont() throws FileNotFoundException {
+		font = Font.loadFont(new FileInputStream(new File("src/screen/resources/pong.ttf")), 22);
 	}
 
     private void createAnimationTimer() {
@@ -48,14 +75,17 @@ public class TwoPlayer extends SinglePlayer {
             public void handle(long now)
             {            	
             	drawGame();
+            	drawScore();
             	movePlayer();            	
             	
     			gc.setFill(Color.WHITE);
-    			gc.fillText("Ball X : " + ball.getXPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 50);
-    			gc.fillText("Ball Y : " + ball.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 75);
-    			gc.fillText("Ball dX : " + ball.getXSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 100);
-    			gc.fillText("Ball dY : " + ball.getYSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 125);
-    			gc.fillText("Started : " + gameStarted, (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 150);   			
+    			gc.fillText("Player1 Y: " + playerOne.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 25);
+    			gc.fillText("Player2 Y: " + playerTwo.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 50);
+    			gc.fillText("Ball X : " + ball.getXPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 75);
+    			gc.fillText("Ball Y : " + ball.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 100);
+    			gc.fillText("Ball dX : " + ball.getXSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 125);
+    			gc.fillText("Ball dY : " + ball.getYSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 150);
+    			gc.fillText("Started : " + gameStarted, (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 175);   			
     			
             	if (gameStarted) {            		
                     drawBall();                    
@@ -75,13 +105,22 @@ public class TwoPlayer extends SinglePlayer {
         
 	}
     
-	private void drawGame() {
-		
+    private void drawScore() {
+    	gc.setFill(Color.WHITE);
+    	gc.setFont(font);
+    	gc.fillText(scoreOne + "\t\t\t" + scoreTwo, 235, 60);
+    }
+    
+	private void drawGame() {		
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);		
 		
+		gc.setFill(Color.WHITE);
+		for (int i = 0; i < Main.HEIGHT; i += 15) {
+			gc.fillRect(Main.WIDTH / 2, i, 2, 10);
+		}		
 	}
-	
+    
 	private void drawBall() {
 		
 		gc.setFill(Color.WHITE);
@@ -91,24 +130,24 @@ public class TwoPlayer extends SinglePlayer {
 		
 	}
 	
+    private void moveBall() {
+    	
+    	gc.fillText("moving", (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 200);
+    	ball.setXPos(ball.getXPos() +  ball.getXSpeed());
+    	ball.setYPos(ball.getYPos() +  ball.getYSpeed());
+    	
+    }
+	
 	private void drawPlayers() {
 		
 		gc.setFill(Color.WHITE);
 		gc.fillRect(playerOne.getXPos(), playerOne.getYPos(), playerOne.getWidth(), playerOne.getHeight());
 		gc.fillRect(playerTwo.getXPos(), playerTwo.getYPos(), playerTwo.getWidth(), playerTwo.getHeight());
 		
-	}
-    
-    private void moveBall() {
-    	
-    	gc.fillText("moving", (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 175);
-    	ball.setXPos(ball.getXPos() +  ball.getXSpeed());
-    	ball.setYPos(ball.getYPos() +  ball.getYSpeed());
-    	
-    }
-    
+	}    
 	
 	private void movePlayer() {	  
+		System.out.println("Two player : movePlayer");
 	
 		if (upKeyPressed) {
 			playerTwo.setYPos(playerTwo.getYPos() - playerTwo.getSpeed());
@@ -221,10 +260,10 @@ public class TwoPlayer extends SinglePlayer {
 		int nX;
 		int nY;
 		do
-			nX = -2 + rand.nextInt(4);
+			nX = -2 + rand.nextInt(5);
 		while (nX == 0 || nX == -1 || nX == 1);
 		do
-			nY = -1 + rand.nextInt(2);
+			nY = -1 + rand.nextInt(3);
 		while(nY == 0);
 		ball.setXSpeed(nX);
 		ball.setYSpeed(nY);		

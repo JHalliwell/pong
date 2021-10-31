@@ -19,10 +19,10 @@ public class Ball {
 		int nX;
 		int nY;
 		do
-			nX = -2 + rand.nextInt(4);
+			nX = -2 + rand.nextInt(5);
 		while (nX == 0 || nX == -1 || nX == 1);
 		do
-			nY = -1 + rand.nextInt(2);
+			nY = -1 + rand.nextInt(3);
 		while(nY == 0);
 		
 		xSpeed = nX;

@@ -27,6 +27,7 @@ public class Menu {
 	private static int GAME_HEIGHT = 600;
 	
 	public Menu() throws FileNotFoundException{ 
+		System.out.println("Menu()");
 		menuStage = new Stage();
 		menuStage.setTitle("PONG");
 		menuStage.setResizable(false);
@@ -64,13 +65,6 @@ public class Menu {
         titleLbl.setLayoutX(375);
         titleLbl.setLayoutY(150);
         
-//        Label playersLbl = new Label("How Many Players?");
-//        playersLbl.setFont(font);
-//        titleLbl.setScaleX(5);
-//        titleLbl.setScaleY(5);
-//        titleLbl.setLayoutX(375);
-//        titleLbl.setLayoutY(300);
-        
         menuPane.getChildren().addAll(titleLbl);
 	}
 	
@@ -78,17 +72,29 @@ public class Menu {
 		PongButton onePlayer = new PongButton("Single Player", 100, 400);
 		onePlayer.setOnAction(e -> {
               menuStage.hide();
-              SinglePlayer single = new SinglePlayer();
-              single.createNewGame();
+              SinglePlayer single;
+			try {
+				single = new SinglePlayer();
+				single.createNewGame();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+              
           });
 
           PongButton multiPlayer = new PongButton("Two Player", 500, 400);
           multiPlayer.setOnAction(e -> {
         	  menuStage.hide();
-        	  TwoPlayer two = new TwoPlayer();
-        	  two.createNewGame();
-
-          });
+        	  TwoPlayer two;
+			try {
+				two = new TwoPlayer();
+				two.createNewGame();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			});
 
 //        PongButton exitButton = new PongButton("Exit", 650, 450, true);
 //        exitButton.setOnAction(e -> menuStage.hide());

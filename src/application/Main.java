@@ -33,7 +33,6 @@ public class Main extends Application {
 		primaryStage = menuScreen.getMainStage();
         primaryStage.setTitle("PONG");
         primaryStage.show();
-
 	}
 
 	public static void main(String[] args) {

@@ -13,43 +13,35 @@ public class Player {
 	private static int GAME_WIDTH = 800;			
 	private int xPos;
 	private int yPos;
-	private int playerTwoSpeed;
-
+	private int playerSpeed;
 	
 	public Player(boolean one) {		
 		if (one) xPos = 0;
 		else xPos = GAME_WIDTH - WIDTH;			
 		yPos = (GAME_HEIGHT / 2) - 50;
 		
-		setPlayerTwoSpeed(5);	
+		setPlayerSpeed(5);	
 	}
-		
-
 	
 	public int getHeight() {
 		return HEIGHT;
 	}
 
-
 	public int getWidth() {
 		return WIDTH;
 	}
-
 
 	public int getXPos() {
 		return xPos;
 	}
 
-
 	public void setXPos(int xPos) {
 		this.xPos = xPos;
 	}
 
-
 	public int getYPos() {
 		return yPos;
 	}
-
 
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
@@ -59,14 +51,12 @@ public class Player {
 		return SPEED;
 	}
 
-	public int getPlayerTwoSpeed() {
-		return playerTwoSpeed;
+	public int getPlayerSpeed() {
+		return playerSpeed;
 	}
 
-
-
-	public void setPlayerTwoSpeed(int playerTwoSpeed) {
-		this.playerTwoSpeed = playerTwoSpeed;
+	public void setPlayerSpeed(int playerSpeed) {
+		this.playerSpeed = playerSpeed;
 	}	
 	
 }

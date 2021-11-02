@@ -108,9 +108,16 @@ public class SinglePlayer {
             	drawPlayers();
             	
             	// Condition to switch to end game
-            	if (scoreOne == 5 || scoreTwo == 5) {
-            		// Switch to end game scene
-            		
+            	if (scoreOne == 1 || scoreTwo == 1) {
+            		// Switch to end game scene            		
+            		try {
+            			stage.hide();
+						EndGame endGame = new EndGame(true);
+						endGame.createEndGame();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
             	}
             	
             }		

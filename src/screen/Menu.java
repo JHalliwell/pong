@@ -54,7 +54,7 @@ public class Menu {
 	private void createTitle() {
 		
 		// Initialise label
-		Label titleLbl = new Label("PONG:");
+		Label titleLbl = new Label("PONG");
         titleLbl.setFont(font);
         titleLbl.setStyle("-fx-text-fill: #f2f2f2;");
         

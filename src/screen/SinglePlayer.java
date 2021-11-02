@@ -81,22 +81,13 @@ public class SinglePlayer {
             {
             	
             	drawGame();
-            	drawScore();
-            	movePlayerOne();           
-            	movePlayerTwo();
-            	
-    			gc.setFill(Color.WHITE);
-    			gc.fillText("Player1 Y: " + playerOne.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 25);
-    			gc.fillText("Player2 Y: " + playerTwo.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 50);
-    			gc.fillText("Ball X : " + ball.getXPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 75);
-    			gc.fillText("Ball Y : " + ball.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 100);
-    			gc.fillText("Ball dX : " + ball.getXSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 125);
-    			gc.fillText("Ball dY : " + ball.getYSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 150);
-    			gc.fillText("Started : " + gameStarted, (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 175);    			
+            	drawScore();  		
     			
             	if (gameStarted) {            		
                     drawBall();                    
-                    ballCollision();                      
+                    ballCollision();     
+                    movePlayerOne();           
+                	movePlayerTwo();
             	} else {
             		// Draw click to start text
         			gc.setFill(Color.WHITE);
@@ -106,18 +97,11 @@ public class SinglePlayer {
             	
             	moveBall();
             	drawPlayers();
+            	endGame();
             	
             	// Condition to switch to end game
             	if (scoreOne == 1 || scoreTwo == 1) {
-            		// Switch to end game scene            		
-            		try {
-            			stage.hide();
-						EndGame endGame = new EndGame(true);
-						endGame.createEndGame();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+            		
             	}
             	
             }		
@@ -125,6 +109,36 @@ public class SinglePlayer {
         animationTimer.start();
         
 	}
+    
+    private void endGame() {
+    	
+    	if (scoreOne == 2) {
+    		// Switch to end game scene            		
+    		try {
+    			stage.hide();
+				EndGame endGame = new EndGame(true);
+				endGame.createEndGame();
+				animationTimer.stop();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+    	if (scoreTwo == 2) {    		
+    		// Switch to end game scene            		
+    		try {
+    			stage.hide();
+				EndGame endGame = new EndGame(false);
+				endGame.createEndGame();
+				animationTimer.stop();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+    }
     
     private void drawScore() {
     	gc.setFill(Color.WHITE);
@@ -159,9 +173,8 @@ public class SinglePlayer {
 		
 	}
     
-    private void moveBall() {
-    	
-    	gc.fillText("moving", (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 200);
+    private void moveBall() {    	
+
     	ball.setXPos(ball.getXPos() +  ball.getXSpeed());
     	ball.setYPos(ball.getYPos() +  ball.getYSpeed());
     	
@@ -180,8 +193,10 @@ public class SinglePlayer {
 	}
 	
 	private void movePlayerTwo() {
-		System.out.println("One player : movePlayerTwo");
 		
+		if (gameStarted) {
+			
+		}
 		if (ball.getYPos() > playerTwo.getYPos()) {
 			playerTwo.setYPos(playerTwo.getYPos() + playerTwo.getSpeed());
 		}

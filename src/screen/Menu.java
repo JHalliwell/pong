@@ -83,7 +83,7 @@ public class Menu {
 	private void createButtons() throws FileNotFoundException {
 		
 		// Initialise single player button
-		PongButton onePlayer = new PongButton("Single Player", 100, 400);
+		PongButton onePlayer = new PongButton("SINGLE PLAYER", 100, 400);
 		
 		// When button clicked
 		onePlayer.setOnAction(e -> {                         
@@ -101,7 +101,7 @@ public class Menu {
           });
 			
 		  // Initialise twoPlayer button
-          PongButton multiPlayer = new PongButton("Two Player", 500, 400);
+          PongButton multiPlayer = new PongButton("TWO PLAYER", 500, 400);
           multiPlayer.setOnAction(e -> {
         	  menuStage.hide();
         	  TwoPlayer two;
@@ -123,4 +123,8 @@ public class Menu {
 	public Stage getMainStage() {
         return menuStage;
     }
+	
+	public void createMenu() {
+		menuStage.show();
+	}
 }

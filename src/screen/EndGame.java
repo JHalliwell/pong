@@ -40,6 +40,13 @@ public class EndGame {
         endScene = new Scene(endPane);
         endStage.setScene(endScene);
         
+        // Winner determined condition
+        if (oneWins) {
+        	winner = true;
+        } else {
+        	winner = false;
+        }
+        
         loadFont();
         createText();
         createButtons();
@@ -48,23 +55,37 @@ public class EndGame {
 	private void createButtons() throws FileNotFoundException {
 		
 		menuButton = new PongButton("Menu", 100, 400);		
+		menuButton.setOnAction(e -> {			
+			try {
+				endStage.hide();
+				Menu menu = new Menu();
+				menu.createMenu();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		});
 		
 		exitButton = new PongButton("Exit", 500, 400);
+		exitButton.setOnAction(e -> {
+			endStage.hide();
+		});
 		
 		endPane.getChildren().addAll(menuButton, exitButton);
 	}
 	
 	private void createText() {
 		String win;
-		if (winner) win = "One"; else win = "Two"; 
+		if (winner) win = "ONE"; else win = "TWO"; 
 		
 		// Initialise label
-		Label titleLbl = new Label("Player" + win + "Wins!");
+		Label titleLbl = new Label("PLAYER " + win + " WINS");
         titleLbl.setFont(font);
         titleLbl.setStyle("-fx-text-fill: #f2f2f2;");
-        titleLbl.setScaleX(5);
-        titleLbl.setScaleY(5);
-        titleLbl.setLayoutX(375);
+        titleLbl.setScaleX(2);
+        titleLbl.setScaleY(2);
+        titleLbl.setLayoutX(325);
         titleLbl.setLayoutY(150);
         
         endPane.getChildren().add(titleLbl);

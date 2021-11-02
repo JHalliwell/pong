@@ -28,11 +28,14 @@ public class Main extends Application {
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	
+	private Stage mainStage;
+	
 	public void start(Stage primaryStage) throws FileNotFoundException{
+		mainStage = primaryStage;
 		Menu menuScreen = new Menu();
-		primaryStage = menuScreen.getMainStage();
-        primaryStage.setTitle("PONG");
-        primaryStage.show();
+		mainStage = menuScreen.getMainStage();
+        mainStage.setTitle("PONG");
+        mainStage.show();
 	}
 
 	public static void main(String[] args) {

@@ -76,17 +76,8 @@ public class TwoPlayer {
             {            	
             	drawGame();
             	drawScore();
-            	movePlayer();            	
+            	movePlayer();    
             	
-    			gc.setFill(Color.WHITE);
-    			gc.fillText("Player1 Y: " + playerOne.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 25);
-    			gc.fillText("Player2 Y: " + playerTwo.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 50);
-    			gc.fillText("Ball X : " + ball.getXPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 75);
-    			gc.fillText("Ball Y : " + ball.getYPos(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 100);
-    			gc.fillText("Ball dX : " + ball.getXSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 125);
-    			gc.fillText("Ball dY : " + ball.getYSpeed(), (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 150);
-    			gc.fillText("Started : " + gameStarted, (Main.WIDTH / 2) - 10, Main.HEIGHT / 2 - 175);   			
-    			
             	if (gameStarted) {            		
                     drawBall();                    
                     ballCollision();                      
@@ -98,12 +89,44 @@ public class TwoPlayer {
             	}
             	
             	moveBall();
-            	drawPlayers();            	
+            	drawPlayers();
+            	endGame();
             }			
         };
         animationTimer.start();
         
 	}
+    
+    private void endGame() {
+    	
+    	if (scoreOne == 2) {
+    		// Switch to end game scene            		
+    		try {
+    			stage.hide();
+				EndGame endGame = new EndGame(true);
+				endGame.createEndGame();
+				animationTimer.stop();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+    	if (scoreTwo == 2) {    		
+    		// Switch to end game scene            		
+    		try {
+    			stage.hide();
+				EndGame endGame = new EndGame(false);
+				endGame.createEndGame();
+				animationTimer.stop();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+    }
+    
     
     private void drawScore() {
     	gc.setFill(Color.WHITE);
@@ -147,7 +170,6 @@ public class TwoPlayer {
 	}    
 	
 	private void movePlayer() {	  
-		System.out.println("Two player : movePlayer");
 	
 		if (upKeyPressed) {
 			playerTwo.setYPos(playerTwo.getYPos() - playerTwo.getSpeed());

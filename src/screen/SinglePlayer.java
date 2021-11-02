@@ -29,7 +29,7 @@ public class SinglePlayer {
 
 	private boolean sKeyPressed = false;
 	private boolean wKeyPressed = false;
-	private boolean gameStarted;	
+	private boolean gameStarted = false;	
 
 	private Ball ball;
 	private Player playerOne;
@@ -39,24 +39,32 @@ public class SinglePlayer {
 	private int scoreTwo = 0;
 	private Font font;
 	
+	private boolean gameEnded = false;
+	
 	public SinglePlayer() throws FileNotFoundException {	
-		System.out.println("SinglePlayer()");
+		System.out.println("SinglePlayer()");	// For debugging
 		
+		// Initialise Single player stage
 		stage = new Stage();
-		group = new Group();
-		scene = new Scene(group);
 		stage.setTitle("SINGLE PLAYER PONG");
 		stage.setResizable(false);	
+		
+		// Initialise group - where all components auto to 0,0
+		group = new Group();
+		
+		// Initialise scene with group, setScene to stage
+		scene = new Scene(group);		
 		stage.setScene(scene);
-		canvas = new Canvas(Main.WIDTH, Main.HEIGHT);
-		loadFont();
+		
+		// Initialise canvas and add to group
+		canvas = new Canvas(Main.WIDTH, Main.HEIGHT);		
 		gc = canvas.getGraphicsContext2D();
 		group.getChildren().add(canvas);
 		
+		loadFont();		
 		ball = new Ball();
 		playerOne = new Player(true);
 		playerTwo = new Player(false);
-		gameStarted = false;
 		createAnimationTimer();		
 		addActionListeners();		
 	}
@@ -98,6 +106,12 @@ public class SinglePlayer {
             	
             	moveBall();
             	drawPlayers();
+            	
+            	// Condition to switch to end game
+            	if (scoreOne == 5 || scoreTwo == 5) {
+            		// Switch to end game scene
+            		
+            	}
             	
             }		
         };
